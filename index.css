@@ -1,0 +1,47 @@
+*{
+    background-color: black;
+    color: white;
+    font-family: monospace;
+    font-size: 20px;
+    font-family: "JetBrains Mono", monospace;
+
+    
+}
+
+button {
+    background-color: black;
+    color: white;
+    font-family: monospace;
+    font-size: 20px;
+    /* center the button in the page */
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+
+    /*remove the default button styling*/
+    border: dashed;
+    border-width: 2px;
+    padding: 5px
+    
+
+    
+}
+
+button:hover {
+    background-color: cyan;
+    color: rgb(2, 54, 54);
+
+    /*small glow effect*/
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.15), 0 0 20px rgba(0, 255, 255, 0.15), 0 0 40px rgba(0, 255, 255, 0.15), 0 0 80px rgba(0, 255, 255, 0.15), 0 0 160px rgba(0, 255, 255, 0.75);
+}
+
+h1{
+    /* move the header to the left of the button */ 
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    font-size: 50px;
+
+    transform: translate(-50%, -110%);
+}
