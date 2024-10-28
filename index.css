@@ -15,8 +15,7 @@ button {
     font-size: 20px;
     /* center the button in the page */
     position: absolute;
-    top: 50%;
-    left: 55%;
+    left: 60%;
     transform: translate(-50%, -50%);
 
     /*remove the default button styling*/
@@ -26,6 +25,14 @@ button {
     
 
     
+}
+
+#cyan{
+    top: 45%;
+}
+
+#sulfur{
+    top: 55%;
 }
 
 button:hover {
