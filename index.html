@@ -6,6 +6,84 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
 
     <title>cyλn</title>
+    <style>
+        *{
+    background-color: black;
+    color: white;
+    font-family: monospace;
+    font-size: 20px;
+    font-family: "JetBrains Mono", monospace;
+
+    
+}
+
+.container {  display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 5px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "Main Links";
+  }
+  
+  .Main { grid-area: Main;
+
+}
+  
+  .Links { grid-area: Links;
+    justify-content: center;
+    align-items: center;
+}
+  
+
+button {
+    background-color: black;
+    color: white;
+    font-family: monospace;
+    font-size: 20px;
+
+    border: solid;
+    border-width: 1px;
+    padding: 5px;
+    top: 47.5%;
+    position: absolute;
+    
+
+    
+}
+
+#cyan{
+}
+
+#sulfur{
+    transform: translateY(50px);
+}
+
+button:hover {
+    background-color: cyan;
+    color: rgb(2, 54, 54);
+
+    /*small glow effect*/
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.15), 0 0 20px rgba(0, 255, 255, 0.15), 0 0 40px rgba(0, 255, 255, 0.15), 0 0 80px rgba(0, 255, 255, 0.15), 0 0 160px rgba(0, 255, 255, 0.75);
+}
+
+h1{
+    position: absolute;
+    top:45%;
+    left:30%;
+
+    font-size: 50px;
+
+}
+
+h4{
+    position: absolute;
+    top:60%;
+    left:30%;
+
+    font-size: 20px;
+}   
+    </style>
 <head>
 </head>
 <body>
