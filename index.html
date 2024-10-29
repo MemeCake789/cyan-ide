@@ -1,133 +1,25 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html>
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
-
-    <title>cyλn</title>
-    <style>
-        *{
-    background-color: black;
-    color: white;
-    font-family: monospace;
-    font-size: 20px;
-    font-family: "JetBrains Mono", monospace;
-
-    
-}
-
-.container {  display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    gap: 0px 5px;
-    grid-auto-flow: row;
-    grid-template-areas:
-      "Main Links";
-  }
-  
-  .Main { grid-area: Main;
-
-}
-  
-  .Links { grid-area: Links;
-    justify-content: center;
-    align-items: center;
-}
-  
-
-button {
-    background-color: black;
-    color: white;
-    font-family: monospace;
-    font-size: 20px;
-
-    border: solid;
-    border-width: 1px;
-    padding: 5px;
-    top: 47.5%;
-    position: absolute;
-    
-
-    
-}
-
-#cyan{
-}
-
-#sulfur{
-    transform: translateY(50px);
-}
-
-button:hover {
-    background-color: cyan;
-    color: rgb(2, 54, 54);
-
-    /*small glow effect*/
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.15), 0 0 20px rgba(0, 255, 255, 0.15), 0 0 40px rgba(0, 255, 255, 0.15), 0 0 80px rgba(0, 255, 255, 0.15), 0 0 160px rgba(0, 255, 255, 0.75);
-}
-
-h1{
-    position: absolute;
-    top:45%;
-    left:30%;
-
-    font-size: 50px;
-
-}
-
-h4{
-    position: absolute;
-    top:60%;
-    left:30%;
-
-    font-size: 20px;
-}   
-    </style>
+<link rel=icon type=image/svg+xml href=/favicon.png>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel=stylesheet>
+<title>cyλn</title>
+<style>*{background-color:#000;color:#fff;font-family:monospace;font-size:20px;font-family:"JetBrains Mono",monospace}.container{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr;gap:0 5px;grid-auto-flow:row;grid-template-areas:"Main Links"}.Main{grid-area:Main}.Links{grid-area:Links;justify-content:center;align-items:center}button{background-color:#000;color:#fff;font-family:monospace;font-size:20px;border:solid;border-width:1px;padding:5px;top:47.5%;position:absolute}#sulfur{transform:translateY(50px)}button:hover{background-color:#0ff;color:#023636;box-shadow:0 0 10px rgba(0,255,255,.15),0 0 20px rgba(0,255,255,.15),0 0 40px rgba(0,255,255,.15),0 0 80px rgba(0,255,255,.15),0 0 160px rgba(0,255,255,.75)}h1{position:absolute;top:45%;left:30%;font-size:50px}h4{position:absolute;top:60%;left:30%;font-size:20px}</style>
 <head>
 </head>
 <body>
-    <!-- https://sulfur-lake.vercel.app/ -->
-    <link rel="stylesheet" href="/index.css">
-    <div class="container">
-      <div class="Main">
-        <h1>cyλn</h1>
-        <h4>Update: v1.1.2 [10/28/2024]: Proxy UI & Performance Update (sµlfur)</h4>
-      </div>
-      <div class="Links">
-        <button id="cyan" onclick="openWebsiteInNewWindow('https://cyan-git-main-mem3s-projects.vercel.app/','cyan')">> Start cyλn &nbsp; [Games] </button>
-        <button id="sulfur" onclick="openWebsiteInNewWindow('https://sulfur-inky.vercel.app/rx','sulfur')">> Start sµlfur [Proxy] </button>
-
-      </div>
-    </div>
-    
-
-    <script type="text/javascript">
-
-        function openWebsiteInNewWindow(link, buttonId) {
-          var urlobj = new window.URL(window.location.href);
-          var url = link;
-          if (url) {
-            var win;
-            document.getElementById(buttonId).onclick = function() {
-              if (win) {
-                win.focus();
-              } else {
-                win = window.open();
-                win.document.body.style.margin = '0';
-                win.document.body.style.height = '100%';
-                var iframe = win.document.createElement('iframe');
-                iframe.style.border = 'none';
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.margin = '0';
-                iframe.src = url;
-                win.document.body.appendChild(iframe);
-              }
-              location.reload();
-            };
-          }
-        }
-    </script>
+<link rel=stylesheet href=/index.css>
+<div class=container>
+<div class=Main>
+<h1>cyλn</h1>
+<h4>Update: v1.1.2 [10/28/2024]: Proxy UI & Performance Update (sµlfur)</h4>
+</div>
+<div class=Links>
+<button id=cyan onclick='openWebsiteInNewWindow("https://cyan-git-main-mem3s-projects.vercel.app/","cyan")'>> Start cyλn &nbsp; [Games] </button>
+<button id=sulfur onclick='openWebsiteInNewWindow("https://sulfur-inky.vercel.app/rx","sulfur")'>> Start sµlfur [Proxy] </button>
+</div>
+</div>
+<script>function openWebsiteInNewWindow(e,n){new window.URL(window.location.href);var o,t=e;t&&(document.getElementById(n).onclick=function(){if(o)o.focus();else{(o=window.open()).document.body.style.margin="0",o.document.body.style.height="100%";var e=o.document.createElement("iframe");e.style.border="none",e.style.width="100%",e.style.height="100%",e.style.margin="0",e.src=t,o.document.body.appendChild(e)}location.reload()})}</script>
 </body>
 </html>
