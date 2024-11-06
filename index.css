@@ -32,9 +32,9 @@ button {
     color: white;
     font-family: monospace;
     font-size: 20px;
-
     border: solid;
     border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.384);
     padding: 5px;
     top: 47.5%;
     position: absolute;
@@ -60,7 +60,7 @@ button:hover {
 
 h1{
     position: absolute;
-    top:45%;
+    top:43%;
     left:30%;
 
     font-size: 50px;
@@ -69,8 +69,11 @@ h1{
 
 h4{
     position: absolute;
-    top:60%;
+    top:51%;
     left:30%;
-
     font-size: 20px;
+    color: rgba(255, 255, 255, 0.384);
+    /* italicize */
+    font-style: italic;
+    font-weight: 200;
 }   
