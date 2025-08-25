@@ -5,9 +5,7 @@
 <meta name=viewport content="width=device-width,initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel=stylesheet>
 <title>Home - Google Drive</title>
-<!-- Removed external index.css link as styles are now integrated -->
 <style>
-    /* Combined and updated CSS */
     * {
         background-color: black;
         color: white;
@@ -21,41 +19,42 @@
     body {
         display: flex;
         flex-direction: column;
-        justify-content: space-between; /* To push countdown to bottom */
-        align-items: flex-start; /* To left-align everything */
+        justify-content: space-between;
+        align-items: flex-start;
         min-height: 100vh;
         padding: 20px;
-        position: relative; /* For absolute positioning of some elements */
+        position: relative;
+        overflow-x: hidden; /* Prevent horizontal scrollbar */
     }
 
     .container {
-        width: 100%; /* Take full width for alignment */
-        display: flex; /* Changed to flex for easier left alignment of content */
+        width: 100%;
+        display: flex;
         flex-direction: column;
-        align-items: flex-start; /* Left align content within container */
-        text-align: left; /* Ensure text is left aligned */
+        align-items: flex-start;
+        text-align: left;
         max-width: 90%;
-        margin-left: 5%; /* Align with .error and .error-title */
-        margin-top: 5%; /* Adjust as needed */
+        margin-left: 5%;
+        margin-top: 5%;
     }
 
     .Main {
-        width: 100%; /* Ensure Main takes full width */
+        width: 100%;
     }
 
     .error-title {
         position: fixed;
-        left: 5%;
+        left: 6%;
         top: 5%;
         font-size: 50px;
         color: rgba(255, 255, 255, 0.716);
         font-weight: 400;
-        z-index: 10; /* Ensure it's above other content */
+        z-index: 10;
     }
 
     .error {
         position: fixed;
-        left: 5%;
+        left: 12%;
         top: 25%;
         font-size: 20px;
         color: rgba(255, 255, 255, 0.384);
@@ -75,20 +74,15 @@
         padding: 5px;
         cursor: pointer;
         transition: all 0.3s ease;
-        border-radius: 8px;
+        border-radius: 2px;
     }
 
     #cyanide {
-        position: absolute; /* Changed to absolute to position relative to nearest positioned ancestor (body) */
-        bottom: 20px; /* Position at the bottom */
-        right: 20px; /* Position to the right */
+        position: absolute;
+        bottom: -40px;
+        right: 60px;
         width: 200px;
-        transform: none; /* Remove previous transform */
-        /* Adjusted positioning to be explicitly at bottom-right, relative to body */
-    }
-
-    #sulfur {
-        transform: translateY(50px); /* This rule seems to apply to an element not present, but kept for completeness if it's dynamic */
+        transform: none;
     }
 
     button:hover {
@@ -97,36 +91,19 @@
         box-shadow: 0 0 10px rgba(0, 255, 255, 0.15), 0 0 20px rgba(0, 255, 255, 0.15), 0 0 40px rgba(0, 255, 255, 0.15), 0 0 80px rgba(0, 255, 255, 0.15), 0 0 160px rgba(0, 255, 255, 0.75);
     }
 
-    h1 { /* This rule seems to apply to an element not present, but kept for completeness if it's dynamic */
-        position: absolute;
-        top: 40%;
-        left: 30%;
-        font-size: 50px;
-    }
-
     h3 {
         position: fixed;
-        left: 69%; /* Original position */
-        top: 20%; /* Adjusted to appear near the main text */
-        font-size: 20px; /* Inherited, but kept for clarity */
-        color: white; /* Ensure visibility */
-        z-index: 10;
-    }
-
-    h4 { /* This rule seems to apply to an element not present, but kept for completeness if it's dynamic */
-        position: absolute;
-        top: 51.5%;
-        left: 30%;
+        left: 70%;
+        top: 3%;
         font-size: 20px;
-        color: rgba(255, 255, 255, 0.384);
-        font-style: italic;
-        font-weight: 200;
+        color: white;
+        z-index: 10;
     }
 
     .fixed-line, .fixed-line2, .vertical-line, .vertical-line2 {
         position: fixed;
         background-color: #ffffff5c;
-        z-index: 5; /* Behind text but above background */
+        z-index: 5;
     }
 
     .fixed-line {
@@ -165,21 +142,44 @@
         background-size: 1px 10px;
     }
 
-    #countdown-message {
-        position: fixed; /* Fixed position to stay at the bottom-left */
-        bottom: 20px;
-        left: 20px;
-        font-size: 24px;
-        color: red; /* Explicitly red */
-        font-weight: bold;
-        text-align: left; /* Ensure left alignment */
-        width: auto; /* Adjust width based on content */
-        z-index: 10;
+    /* Keyframes for the scrolling animation */
+    @keyframes scrollText {
+        from {
+            transform: translateX(0%);
+        }
+        to {
+            transform: translateX(-50%); /* Scroll until the second half is visible */
+        }
     }
+
+    #countdown-container {
+        position: fixed;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        z-index: 10;
+        display: flex;
+        white-space: nowrap; /* Prevent text from wrapping */
+    }
+    
+    #countdown-message {
+        font-size: 24px;
+        color: red;
+        font-weight: normal;
+        /* Make the message container wide enough to hold two copies of the text */
+        display: flex;
+        animation: scrollText 30s linear infinite;
+    }
+
+    #countdown-message span {
+        color: red;
+        padding-right: 50px; /* Add space between repetitions */
+    }
+
 </style>
 </head>
 <body>
-<!-- Adding the structural lines from your index.css -->
+<!-- Structural lines -->
 <div class="fixed-line"></div>
 <div class="fixed-line2"></div>
 <div class="vertical-line"></div>
@@ -201,11 +201,14 @@
             </span>
             <button id=cyanide onclick='openWebsiteInNewWindow("index_aboutblank.html","cyanide")'>> Start cyλnide </button>
         </h6>
-        <h3>Click Here ↑</h3>
+        <h3>Enable Popups! ↑</h3>
     </div>
 </div>
-<!-- Countdown message will be displayed here, outside the main container for fixed positioning -->
-<div id="countdown-message"></div>
+
+<!-- Container for the scrolling countdown -->
+<div id="countdown-container">
+    <div id="countdown-message"></div>
+</div>
 
 <script>
     function openWebsiteInNewWindow(e,n){
@@ -218,7 +221,6 @@
                 var e=o.document.createElement("iframe");
                 e.style.border="none",e.style.width="100%",e.style.height="100%",e.style.margin="0",e.src=t,o.document.body.appendChild(e);
             }
-            // No reload here, as the page will self-destruct
         });
     }
 
@@ -227,7 +229,14 @@
     const countdownMessageElement = document.getElementById('countdown-message');
 
     const updateCountdown = () => {
-        countdownMessageElement.innerHTML = `This website will self-destruct in ${countdown} seconds!`;
+        const message = `This website will self-destruct in ${countdown} seconds!`;
+        // Create multiple copies of the message for a seamless scroll
+        let messageContent = '';
+        for (let i = 0; i < 10; i++) { // Increased repetitions for wider screens
+            messageContent += `<span>${message}</span>`;
+        }
+        countdownMessageElement.innerHTML = messageContent;
+        
         if (countdown <= 0) {
             clearInterval(countdownInterval);
             // Close the current tab
@@ -241,19 +250,23 @@
     // Update countdown every second
     const countdownInterval = setInterval(updateCountdown, 1000);
 
-    var win = window.open('about:blank'); // <-- include the URL
-    var url = "index_aboutblank.html";
-    var iframe = win.document.createElement('iframe');
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.style.border = "none";
-    iframe.style.outline = "10px solid black";
-    iframe.style.backgroundColor = "black";
-    iframe.src = url;
-    win.document.body.appendChild(iframe);
-
-    // The setTimeout(function() { window.close(); }, 0); was originally meant to close the current tab immediately.
-    // With the countdown, this line is implicitly handled by the countdown finishing.
+    // Attempt to open the new window automatically
+    try {
+        var win = window.open('about:blank');
+        if (win) {
+            var url = "index_aboutblank.html";
+            var iframe = win.document.createElement('iframe');
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
+            iframe.style.border = "none";
+            iframe.style.outline = "10px solid black";
+            iframe.style.backgroundColor = "black";
+            iframe.src = url;
+            win.document.body.appendChild(iframe);
+        }
+    } catch (e) {
+        console.error("Popup was blocked by the browser.", e);
+    }
 </script>
 </body>
 </html>
