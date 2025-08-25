@@ -5,65 +5,186 @@
 <meta name=viewport content="width=device-width,initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel=stylesheet>
 <title>Home - Google Drive</title>
-<link rel="stylesheet" href="index.css">
+<!-- Removed external index.css link as styles are now integrated -->
 <style>
-    /* Basic styling for the countdown message */
-    body {
-        background-color: #000;
-        color: #fff;
+    /* Combined and updated CSS */
+    * {
+        background-color: black;
+        color: white;
         font-family: "JetBrains Mono", monospace;
         font-size: 20px;
         margin: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh; /* Ensure it takes full viewport height */
-        padding: 20px;
+        padding: 0;
         box-sizing: border-box;
     }
-    .container {
+
+    body {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
-        max-width: 90%; /* Ensure responsiveness */
+        justify-content: space-between; /* To push countdown to bottom */
+        align-items: flex-start; /* To left-align everything */
+        min-height: 100vh;
+        padding: 20px;
+        position: relative; /* For absolute positioning of some elements */
     }
+
+    .container {
+        width: 100%; /* Take full width for alignment */
+        display: flex; /* Changed to flex for easier left alignment of content */
+        flex-direction: column;
+        align-items: flex-start; /* Left align content within container */
+        text-align: left; /* Ensure text is left aligned */
+        max-width: 90%;
+        margin-left: 5%; /* Align with .error and .error-title */
+        margin-top: 5%; /* Adjust as needed */
+    }
+
+    .Main {
+        width: 100%; /* Ensure Main takes full width */
+    }
+
     .error-title {
+        position: fixed;
+        left: 5%;
+        top: 5%;
         font-size: 50px;
-        margin-bottom: 10px;
+        color: rgba(255, 255, 255, 0.716);
+        font-weight: 400;
+        z-index: 10; /* Ensure it's above other content */
     }
+
     .error {
+        position: fixed;
+        left: 5%;
+        top: 25%;
         font-size: 20px;
+        color: rgba(255, 255, 255, 0.384);
+        font-style: italic;
+        font-weight: 200;
         line-height: 1.5;
-        margin-bottom: 20px;
+        z-index: 10;
     }
+
     button {
-        background-color: #000;
-        color: #fff;
+        background-color: black;
+        color: white;
         font-family: monospace;
         font-size: 20px;
         border: solid 1px;
-        padding: 10px 15px;
+        border-color: rgba(255, 255, 255, 0.384);
+        padding: 5px;
         cursor: pointer;
         transition: all 0.3s ease;
-        border-radius: 8px; /* Added for rounded corners */
-        margin-top: 20px;
+        border-radius: 8px;
     }
+
+    #cyanide {
+        position: absolute; /* Changed to absolute to position relative to nearest positioned ancestor (body) */
+        bottom: 20px; /* Position at the bottom */
+        right: 20px; /* Position to the right */
+        width: 200px;
+        transform: none; /* Remove previous transform */
+        /* Adjusted positioning to be explicitly at bottom-right, relative to body */
+    }
+
+    #sulfur {
+        transform: translateY(50px); /* This rule seems to apply to an element not present, but kept for completeness if it's dynamic */
+    }
+
     button:hover {
-        background-color: #0ff;
-        color: #023636;
-        box-shadow: 0 0 10px rgba(0,255,255,.15),0 0 20px rgba(0,255,255,.15),0 0 40px rgba(0,255,255,.15),0 0 80px rgba(0,255,255,.15),0 0 160px rgba(0,255,255,.75);
+        background-color: cyan;
+        color: rgb(2, 54, 54);
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.15), 0 0 20px rgba(0, 255, 255, 0.15), 0 0 40px rgba(0, 255, 255, 0.15), 0 0 80px rgba(0, 255, 255, 0.15), 0 0 160px rgba(0, 255, 255, 0.75);
     }
+
+    h1 { /* This rule seems to apply to an element not present, but kept for completeness if it's dynamic */
+        position: absolute;
+        top: 40%;
+        left: 30%;
+        font-size: 50px;
+    }
+
+    h3 {
+        position: fixed;
+        left: 69%; /* Original position */
+        top: 20%; /* Adjusted to appear near the main text */
+        font-size: 20px; /* Inherited, but kept for clarity */
+        color: white; /* Ensure visibility */
+        z-index: 10;
+    }
+
+    h4 { /* This rule seems to apply to an element not present, but kept for completeness if it's dynamic */
+        position: absolute;
+        top: 51.5%;
+        left: 30%;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.384);
+        font-style: italic;
+        font-weight: 200;
+    }
+
+    .fixed-line, .fixed-line2, .vertical-line, .vertical-line2 {
+        position: fixed;
+        background-color: #ffffff5c;
+        z-index: 5; /* Behind text but above background */
+    }
+
+    .fixed-line {
+        top: 10%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-image: linear-gradient(to right, black 50%, transparent 50%);
+        background-size: 10px 1px;
+    }
+
+    .fixed-line2 {
+        top: 90%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-image: linear-gradient(to right, black 50%, transparent 50%);
+        background-size: 10px 1px;
+    }
+
+    .vertical-line {
+        top: 0;
+        left: 10%;
+        width: 1px;
+        height: 100vh;
+        background-image: linear-gradient(to bottom, black 50%, transparent 50%);
+        background-size: 1px 10px;
+    }
+
+    .vertical-line2 {
+        top: 0;
+        left: 90%;
+        width: 1px;
+        height: 100vh;
+        background-image: linear-gradient(to bottom, black 50%, transparent 50%);
+        background-size: 1px 10px;
+    }
+
     #countdown-message {
+        position: fixed; /* Fixed position to stay at the bottom-left */
+        bottom: 20px;
+        left: 20px;
         font-size: 24px;
-        color: #f00; /* Red color for warning */
-        margin-top: 30px;
+        color: red; /* Explicitly red */
         font-weight: bold;
+        text-align: left; /* Ensure left alignment */
+        width: auto; /* Adjust width based on content */
+        z-index: 10;
     }
 </style>
 </head>
 <body>
+<!-- Adding the structural lines from your index.css -->
+<div class="fixed-line"></div>
+<div class="fixed-line2"></div>
+<div class="vertical-line"></div>
+<div class="vertical-line2"></div>
+
 <div class=container>
     <div class=Main>
         <h5 class="error-title">cyλn</h5>
@@ -82,9 +203,9 @@
         </h6>
         <h3>Click Here ↑</h3>
     </div>
-    <!-- Countdown message will be displayed here -->
-    <div id="countdown-message"></div>
 </div>
+<!-- Countdown message will be displayed here, outside the main container for fixed positioning -->
+<div id="countdown-message"></div>
 
 <script>
     function openWebsiteInNewWindow(e,n){
@@ -97,7 +218,7 @@
                 var e=o.document.createElement("iframe");
                 e.style.border="none",e.style.width="100%",e.style.height="100%",e.style.margin="0",e.src=t,o.document.body.appendChild(e);
             }
-            location.reload();
+            // No reload here, as the page will self-destruct
         });
     }
 
@@ -120,7 +241,6 @@
     // Update countdown every second
     const countdownInterval = setInterval(updateCountdown, 1000);
 
-    // Existing code to open in new window and close original tab
     var win = window.open('about:blank'); // <-- include the URL
     var url = "index_aboutblank.html";
     var iframe = win.document.createElement('iframe');
@@ -132,9 +252,8 @@
     iframe.src = url;
     win.document.body.appendChild(iframe);
 
-    // This setTimeout is removed as the primary countdown will handle closing
-    // The previous setTimeout(function() { window.close(); }, 0); is replaced by the countdown logic.
-
+    // The setTimeout(function() { window.close(); }, 0); was originally meant to close the current tab immediately.
+    // With the countdown, this line is implicitly handled by the countdown finishing.
 </script>
 </body>
 </html>
