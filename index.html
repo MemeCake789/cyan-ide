@@ -211,22 +211,30 @@
 </div>
 
 <script>
-    function openWebsiteInNewWindow(e,n){
-        new window.URL(window.location.href);
-        var o,t=e;
-        t&&(document.getElementById(n).onclick=function(){
-            if(o)o.focus();
-            else{
-                (o=window.open()).document.body.style.margin="0",o.document.body.style.height="100%";
-                var e=o.document.createElement("iframe");
-                e.style.border="none",e.style.width="100%",e.style.height="100%",e.style.margin="0",e.src=t,o.document.body.appendChild(e);
+    function openWebsiteInNewWindow(url, elementId){
+        let popup;
+        document.getElementById(elementId).onclick = function() {
+            if (popup) {
+                popup.focus();
+            } else {
+                popup = window.open();
+                popup.document.body.style.margin = "0";
+                popup.document.body.style.height = "100%";
+                const iframe = popup.document.createElement("iframe");
+                iframe.style.border = "none";
+                iframe.style.width = "100%";
+                iframe.style.height = "100%";
+                iframe.style.margin = "0";
+                iframe.src = url;
+                popup.document.body.appendChild(iframe);
             }
-        });
+        };
     }
 
     // Countdown logic
     let countdown = 30;
     const countdownMessageElement = document.getElementById('countdown-message');
+    let countdownInterval; // Define interval variable in a broader scope
 
     const updateCountdown = () => {
         const message = `This website will self-destruct in ${countdown} seconds!`;
@@ -239,8 +247,8 @@
         
         if (countdown <= 0) {
             clearInterval(countdownInterval);
-            // Close the current tab
-            window.close();
+            // Redirect to a blank page to "close" it.
+            window.location.href = 'about:blank';
         }
         countdown--;
     };
@@ -248,14 +256,14 @@
     // Initial call to display the message immediately
     updateCountdown();
     // Update countdown every second
-    const countdownInterval = setInterval(updateCountdown, 1000);
+    countdownInterval = setInterval(updateCountdown, 1000);
 
     // Attempt to open the new window automatically
     try {
-        var win = window.open('about:blank');
+        const win = window.open('about:blank');
         if (win) {
-            var url = "https://cyan-zeta.vercel.app/";
-            var iframe = win.document.createElement('iframe');
+            const url = "https://cyan-zeta.vercel.app/";
+            const iframe = win.document.createElement('iframe');
             iframe.style.width = "100%";
             iframe.style.height = "100%";
             iframe.style.border = "none";
