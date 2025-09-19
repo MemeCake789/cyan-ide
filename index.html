@@ -210,59 +210,10 @@
     <div id="countdown-message"></div>
 </div>
 <script>
-    function openWebsiteInNewWindow(url, elementId){
-        let popup;
-        document.getElementById(elementId).onclick = function() {
-            if (popup) {
-                popup.focus();
-            } else {
-                popup = window.open("about:blank", "_blank");
-                if (!popup || popup.closed) {
-                    alert("Please allow popups for this site. Doing so will allow us to open the site in an about:blank tab and prevent this site from showing up in your history. You can turn this off in the site settings.");
-                } else {
-                    const doc = popup.document;
-                    const iframe = doc.createElement("iframe");
-                    const style = iframe.style;
-                    const link = doc.createElement("link");
-
-                    // Fake Google Drive look
-                    const name = localStorage.getItem("name") || "My Drive - Google Drive";
-                    const icon =
-                        localStorage.getItem("icon") ||
-                        "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
-
-                    doc.title = name;
-                    link.rel = "icon";
-                    link.href = icon;
-
-                    iframe.src = url;
-                    style.position = "fixed";
-                    style.top = style.bottom = style.left = style.right = 0;
-                    style.border = style.outline = "none";
-                    style.width = style.height = "100%";
-
-                    doc.head.appendChild(link);
-                    doc.body.appendChild(iframe);
-
-                    // Optional: confirmation dialog on close
-                    const script = doc.createElement("script");
-                    script.textContent = `
-                        window.onbeforeunload = function (event) {
-                            const confirmationMessage = 'Leave Site?';
-                            (event || window.event).returnValue = confirmationMessage;
-                            return confirmationMessage;
-                        };
-                    `;
-                    doc.head.appendChild(script);
-                }
-            }
-        };
-    }
-
-    // Countdown logic
+    // Countdown logic (unchanged)
     let countdown = 30;
     const countdownMessageElement = document.getElementById('countdown-message');
-    let countdownInterval; // Define interval variable in a broader scope
+    let countdownInterval;
 
     const updateCountdown = () => {
         const message = `This website will self-destruct in ${countdown} seconds!`;
@@ -282,7 +233,6 @@
     updateCountdown();
     countdownInterval = setInterval(updateCountdown, 1000);
 
-    // Updated AUTO-OPEN mechanics: about:blank cloak, then Google
     try {
         let inFrame;
         try {
@@ -300,19 +250,77 @@
             if (!popup || popup.closed) {
                 // Do nothing, user gets UI as fallback
             } else {
-                // Set title & favicon first, then switch to Google
+                // Set title & favicon first
                 popup.document.title = "My Drive - Google Drive";
                 const link = popup.document.createElement("link");
                 link.rel = "icon";
                 link.href = "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
                 popup.document.head.appendChild(link);
-                // Now switch to Google
-                popup.location.replace("https://www.google.com");
+
+                // Embed cyan-zeta.vercel.app in the iframe
+                const iframe = popup.document.createElement("iframe");
+                iframe.style.position = "fixed";
+                iframe.style.top = "0";
+                iframe.style.left = "0";
+                iframe.style.width = "100%";
+                iframe.style.height = "100%";
+                iframe.style.border = "none";
+                iframe.src = "https://cyan-zeta.vercel.app/";
+                popup.document.body.appendChild(iframe);
             }
+            // Now redirect this page to Google
+            window.location.replace("https://www.google.com");
         }
     } catch (e) {
         // Popup was blocked by the browser
         // UI fallback remains
+    }
+
+    function openWebsiteInNewWindow(url, elementId){
+        let popup;
+        document.getElementById(elementId).onclick = function() {
+            if (popup) {
+                popup.focus();
+            } else {
+                popup = window.open("about:blank", "_blank");
+                if (!popup || popup.closed) {
+                    alert("Please allow popups for this site. Doing so will allow us to open the site in an about:blank tab and prevent this site from showing up in your history. You can turn this off in the site settings.");
+                } else {
+                    const doc = popup.document;
+                    const iframe = doc.createElement("iframe");
+                    const style = iframe.style;
+                    const link = doc.createElement("link");
+
+                    const name = localStorage.getItem("name") || "My Drive - Google Drive";
+                    const icon =
+                        localStorage.getItem("icon") ||
+                        "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+
+                    doc.title = name;
+                    link.rel = "icon";
+                    link.href = icon;
+
+                    iframe.src = url;
+                    style.position = "fixed";
+                    style.top = style.bottom = style.left = style.right = 0;
+                    style.border = style.outline = "none";
+                    style.width = style.height = "100%";
+
+                    doc.head.appendChild(link);
+                    doc.body.appendChild(iframe);
+
+                    const script = doc.createElement("script");
+                    script.textContent = `
+                        window.onbeforeunload = function (event) {
+                            const confirmationMessage = 'Leave Site?';
+                            (event || window.event).returnValue = confirmationMessage;
+                            return confirmationMessage;
+                        };
+                    `;
+                    doc.head.appendChild(script);
+                }
+            }
+        };
     }
 </script>
 </body>
