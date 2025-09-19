@@ -209,7 +209,6 @@
 <div id="countdown-container">
     <div id="countdown-message"></div>
 </div>
-
 <script>
     function openWebsiteInNewWindow(url, elementId){
         let popup;
@@ -217,16 +216,45 @@
             if (popup) {
                 popup.focus();
             } else {
-                popup = window.open();
-                popup.document.body.style.margin = "0";
-                popup.document.body.style.height = "100%";
-                const iframe = popup.document.createElement("iframe");
-                iframe.style.border = "none";
-                iframe.style.width = "100%";
-                iframe.style.height = "100%";
-                iframe.style.margin = "0";
-                iframe.src = url;
-                popup.document.body.appendChild(iframe);
+                popup = window.open("about:blank", "_blank");
+                if (!popup || popup.closed) {
+                    alert("Please allow popups for this site. Doing so will allow us to open the site in an about:blank tab and prevent this site from showing up in your history. You can turn this off in the site settings.");
+                } else {
+                    const doc = popup.document;
+                    const iframe = doc.createElement("iframe");
+                    const style = iframe.style;
+                    const link = doc.createElement("link");
+
+                    // Fake Google Drive look
+                    const name = localStorage.getItem("name") || "My Drive - Google Drive";
+                    const icon =
+                        localStorage.getItem("icon") ||
+                        "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+
+                    doc.title = name;
+                    link.rel = "icon";
+                    link.href = icon;
+
+                    iframe.src = url;
+                    style.position = "fixed";
+                    style.top = style.bottom = style.left = style.right = 0;
+                    style.border = style.outline = "none";
+                    style.width = style.height = "100%";
+
+                    doc.head.appendChild(link);
+                    doc.body.appendChild(iframe);
+
+                    // Optional: confirmation dialog on close
+                    const script = doc.createElement("script");
+                    script.textContent = `
+                        window.onbeforeunload = function (event) {
+                            const confirmationMessage = 'Leave Site?';
+                            (event || window.event).returnValue = confirmationMessage;
+                            return confirmationMessage;
+                        };
+                    `;
+                    doc.head.appendChild(script);
+                }
             }
         };
     }
@@ -238,42 +266,53 @@
 
     const updateCountdown = () => {
         const message = `This website will self-destruct in ${countdown} seconds!`;
-        // Create multiple copies of the message for a seamless scroll
         let messageContent = '';
-        for (let i = 0; i < 10; i++) { // Increased repetitions for wider screens
+        for (let i = 0; i < 10; i++) {
             messageContent += `<span>${message}</span>`;
         }
         countdownMessageElement.innerHTML = messageContent;
         
         if (countdown <= 0) {
             clearInterval(countdownInterval);
-            // Redirect to a blank page to "close" it.
             window.location.href = 'about:blank';
         }
         countdown--;
     };
 
-    // Initial call to display the message immediately
     updateCountdown();
-    // Update countdown every second
     countdownInterval = setInterval(updateCountdown, 1000);
 
-    // Attempt to open the new window automatically
+    // Updated AUTO-OPEN mechanics: about:blank cloak, then Google
     try {
-        const win = window.open('about:blank');
-        if (win) {
-            const url = "https://cyan-zeta.vercel.app/";
-            const iframe = win.document.createElement('iframe');
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
-            iframe.style.border = "none";
-            iframe.style.outline = "10px solid black";
-            iframe.style.backgroundColor = "black";
-            iframe.src = url;
-            win.document.body.appendChild(iframe);
+        let inFrame;
+        try {
+            inFrame = window !== top;
+        } catch (e) {
+            inFrame = true;
+        }
+        if (
+            !inFrame &&
+            !navigator.userAgent.includes("Firefox") &&
+            (localStorage.getItem("ab") === null || localStorage.getItem("ab") === "true")
+        ) {
+            if (!localStorage.getItem("ab")) localStorage.setItem("ab", "true");
+            const popup = window.open("about:blank", "_blank");
+            if (!popup || popup.closed) {
+                // Do nothing, user gets UI as fallback
+            } else {
+                // Set title & favicon first, then switch to Google
+                popup.document.title = "My Drive - Google Drive";
+                const link = popup.document.createElement("link");
+                link.rel = "icon";
+                link.href = "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+                popup.document.head.appendChild(link);
+                // Now switch to Google
+                popup.location.replace("https://www.google.com");
+            }
         }
     } catch (e) {
-        console.error("Popup was blocked by the browser.", e);
+        // Popup was blocked by the browser
+        // UI fallback remains
     }
 </script>
 </body>
