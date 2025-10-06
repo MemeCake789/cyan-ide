@@ -277,52 +277,58 @@
         // Fallback for any other errors, the UI remains.
     }
 
-    function openWebsiteInNewWindow(url, elementId){
-        let popup;
-        document.getElementById(elementId).onclick = function() {
-            if (popup) {
-                popup.focus();
+   function openWebsiteInNewWindow(url, elementId) {
+    let popup;
+    document.getElementById(elementId).onclick = function() {
+        if (popup) {
+            popup.focus();
+        } else {
+            popup = window.open("about:blank", "_blank");
+            if (!popup || popup.closed) {
+                alert("Please allow popups for this site. Doing so will allow us to open the site in an about:blank tab and prevent this site from showing up in your history. You can turn this off in the site settings.");
             } else {
-                popup = window.open("about:blank", "_blank");
-                if (!popup || popup.closed) {
-                    alert("Please allow popups for this site. Doing so will allow us to open the site in an about:blank tab and prevent this site from showing up in your history. You can turn this off in the site settings.");
-                } else {
-                    const doc = popup.document;
-                    const iframe = doc.createElement("iframe");
-                    const style = iframe.style;
-                    const link = doc.createElement("link");
+                const doc = popup.document;
+                const iframe = doc.createElement("iframe");
+                const style = iframe.style;
+                const link = doc.createElement("link");
 
-                    const name = localStorage.getItem("name") || "My Drive - Google Drive";
-                    const icon =
-                        localStorage.getItem("icon") ||
-                        "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
+                const name = localStorage.getItem("name") || "My Drive - Google Drive";
+                const icon =
+                    localStorage.getItem("icon") ||
+                    "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
 
-                    doc.title = name;
-                    link.rel = "icon";
-                    link.href = icon;
+                doc.title = name;
+                link.rel = "icon";
+                link.href = icon;
 
-                    iframe.src = url;
-                    style.position = "fixed";
-                    style.top = style.bottom = style.left = style.right = 0;
-                    style.border = style.outline = "none";
-                    style.width = style.height = "100%";
+                iframe.src = url;
 
-                    doc.head.appendChild(link);
-                    doc.body.appendChild(iframe);
+                iframe.sandbox = "allow-scripts allow-pointer-lock allow-same-origin allow-forms";
+                
+                // Updated allow attribute for pasting
+                iframe.allow = "pointer-lock; clipboard-write";
 
-                    const script = doc.createElement("script");
-                    script.textContent = `
-                        window.onbeforeunload = function (event) {
-                            const confirmationMessage = 'Leave Site?';
-                            (event || window.event).returnValue = confirmationMessage;
-                            return confirmationMessage;
-                        };
-                    `;
-                    doc.head.appendChild(script);
-                }
+                style.position = "fixed";
+                style.top = style.bottom = style.left = style.right = 0;
+                style.border = style.outline = "none";
+                style.width = style.height = "100%";
+
+                doc.head.appendChild(link);
+                doc.body.appendChild(iframe);
+
+                const script = doc.createElement("script");
+                script.textContent = `
+                    window.onbeforeunload = function (event) {
+                        const confirmationMessage = 'Leave Site?';
+                        (event || window.event).returnValue = confirmationMessage;
+                        return confirmationMessage;
+                    };
+                `;
+                doc.head.appendChild(script);
             }
-        };
-    }
+        }
+    };
+}
 </script>
 </body>
 </html>
