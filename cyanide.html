@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Game</title>
+    
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src https://c-g-u.vercel.app;">
+
+    <style>
+        /* Ensures the page takes up the full window with no scrollbars */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000; /* Black background for game feel */
+        }
+
+        /* Styles the iframe to fill the container */
+        .game-frame {
+            border: none;
+            width: 100%;
+            height: 100vh; /* 100% of the viewport height */
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <iframe 
+        src="https://c-g-u.vercel.app/" 
+        class="game-frame"
+        title="Game Embed"
+        allowfullscreen="true"
+        allow="autoplay; fullscreen; gamepad; encrypted-media"
+        sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts"
+        referrerpolicy="no-referrer">
+    </iframe>
+
+</body>
+</html>
