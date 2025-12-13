@@ -161,7 +161,7 @@
         display: flex;
         white-space: nowrap; /* Prevent text from wrapping */
     }
-    
+
     #countdown-message {
         font-size: 24px;
         color: red;
@@ -187,7 +187,7 @@
 <div class=container>
     <div class=Main>
         <h5 class="error-title">cyλn</h5>
-        <h6 class="error">
+        <!--<h6 class="error">
             If you are reading this, then popups are blocked!<br><br>
             Enable Popups:<br>
             1. Click on the popup icon on your URL bar.<br>
@@ -199,7 +199,20 @@
                 Or, if you have no idea what I'm talking about, then click here to manually open the website ↓
             </span>
             <button id=cyanide onclick='openWebsiteInNewWindow("https://i-like-math.vercel.app","cyanide")'>> Start cyλnide </button>
-        </h6>
+        </h6>-->
+        <h1 class="error">
+            Hello, as of right now, the full version of cyanide is not available.<br><br>
+
+            Why?<br>
+                This is because extensions like Go Guardian and other similar extensions can now detect and block sites embed in about:blank, the previous method to run the site.<br><br>
+                    What Now?<br>
+                        I will begin working on building v3 of cyanide, a downloadable version that should not get blocked.
+
+            <span style="background-color: white; color: black; font-weight: bold;">
+                For now, you can install a simple version of the website by clicking the button below. ↓
+            </span>
+            <a href="cyanide-lite.html" download="cyanide-lite.html" class="cyanide"><button id=cyanide>> Download cyλnide-lite </button></a>
+        </h1>
         <h3>Enable Popups! ↑</h3>
     </div>
 </div>
@@ -220,7 +233,7 @@
             messageContent += `<span>${message}</span>`;
         }
         countdownMessageElement.innerHTML = messageContent;
-        
+
         if (countdown <= 0) {
             clearInterval(countdownInterval);
             window.location.href = 'about:blank';
@@ -231,104 +244,7 @@
     updateCountdown();
     countdownInterval = setInterval(updateCountdown, 1000);
 
-    try {
-        let inFrame;
-        try {
-            inFrame = window !== top;
-        } catch (e) {
-            inFrame = true;
-        }
-        if (
-            !inFrame &&
-            !navigator.userAgent.includes("Firefox") &&
-            (localStorage.getItem("ab") === null || localStorage.getItem("ab") === "true")
-        ) {
-            if (!localStorage.getItem("ab")) localStorage.setItem("ab", "true");
-            const popup = window.open("about:blank", "_blank");
-            
-            if (!popup || popup.closed) {
-                // POPUP WAS BLOCKED
-                // Do nothing. The user will see the fallback UI on this page.
-            } else {
-                // POPUP SUCCEEDED
-                // Set title & favicon first
-                popup.document.title = "My Drive - Google Drive";
-                const link = popup.document.createElement("link");
-                link.rel = "icon";
-                link.href = "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
-                popup.document.head.appendChild(link);
 
-                // Embed cyan-zeta.vercel.app in the iframe
-                const iframe = popup.document.createElement("iframe");
-                iframe.style.position = "fixed";
-                iframe.style.top = "0";
-                iframe.style.left = "0";
-                iframe.style.width = "100%";
-                iframe.style.height = "100%";
-                iframe.style.border = "none";
-                iframe.src = "https://i-like-math.vercel.app";
-                popup.document.body.appendChild(iframe);
-
-                // **CHANGE**: Now redirect this page to Google ONLY IF the popup succeeded.
-                window.location.replace("https://www.google.com");
-            }
-        }
-    } catch (e) {
-        // Fallback for any other errors, the UI remains.
-    }
-
-   function openWebsiteInNewWindow(url, elementId) {
-    let popup;
-    document.getElementById(elementId).onclick = function() {
-        if (popup) {
-            popup.focus();
-        } else {
-            popup = window.open("about:blank", "_blank");
-            if (!popup || popup.closed) {
-                alert("Please allow popups for this site. Doing so will allow us to open the site in an about:blank tab and prevent this site from showing up in your history. You can turn this off in the site settings.");
-            } else {
-                const doc = popup.document;
-                const iframe = doc.createElement("iframe");
-                const style = iframe.style;
-                const link = doc.createElement("link");
-
-                const name = localStorage.getItem("name") || "My Drive - Google Drive";
-                const icon =
-                    localStorage.getItem("icon") ||
-                    "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png";
-
-                doc.title = name;
-                link.rel = "icon";
-                link.href = icon;
-
-                iframe.src = url;
-
-                iframe.sandbox = "allow-scripts allow-pointer-lock allow-same-origin allow-forms";
-                
-                // Updated allow attribute for pasting
-                iframe.allow = "pointer-lock; clipboard-write";
-
-                style.position = "fixed";
-                style.top = style.bottom = style.left = style.right = 0;
-                style.border = style.outline = "none";
-                style.width = style.height = "100%";
-
-                doc.head.appendChild(link);
-                doc.body.appendChild(iframe);
-
-                const script = doc.createElement("script");
-                script.textContent = `
-                    window.onbeforeunload = function (event) {
-                        const confirmationMessage = 'Leave Site?';
-                        (event || window.event).returnValue = confirmationMessage;
-                        return confirmationMessage;
-                    };
-                `;
-                doc.head.appendChild(script);
-            }
-        }
-    };
-}
 </script>
 </body>
 </html>
