@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cyanide Loader</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #FFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 0.8em 1.5em;
+            cursor: pointer;
+            background-color: #FFF;
+            color: #000;
+            border: 2px solid #FFF;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            border-radius: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        button:hover {
+            background-color: #333;
+            color: #FFF;
+            border-color: #FFF;
+        }
+        p {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button id="loadButton">Launch Cyanide</button>
+    <script>
+        document.getElementById('loadButton').addEventListener('click', () => {
+            document.body.innerHTML = '<p>Loading...</p>';
+            fetch('https://cdn.jsdelivr.net/gh/MemeCake789/cyan-v3@main/dist/index.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.open('text/html', 'replace');
+                    document.write(html);
+                    document.close();
+                });
+        });
+    </script>
+</body>
+</html>
