@@ -40,17 +40,28 @@
 </head>
 <body>
     <button id="loadButton">Launch Cyanide</button>
-    <script>
-        document.getElementById('loadButton').addEventListener('click', () => {
-            document.body.innerHTML = '<p>Loading...</p>';
-            fetch('https://cdn.jsdelivr.net/gh/MemeCake789/cyan-v3@main/dist/index.html')
-                .then(response => response.text())
-                .then(html => {
-                    document.open('text/html', 'replace');
-                    document.write(html);
-                    document.close();
-                });
-        });
-    </script>
+<script>
+  document.getElementById('loadButton').addEventListener('click', () => {
+    document.body.innerHTML = '<p>Loading...</p>';
+
+    // Adding a timestamp (?t=...) forces the browser/server to fetch a fresh copy
+    const latestUrl = 'https://raw.githubusercontent.com' + new Date().getTime();
+
+    fetch(latestUrl)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.text();
+      })
+      .then(html => {
+        document.open('text/html', 'replace');
+        document.write(html);
+        document.close();
+      })
+      .catch(err => {
+        document.body.innerHTML = '<p style="color:red">Error loading: ' + err.message + '</p>';
+      });
+  });
+</script>
+
 </body>
 </html>
